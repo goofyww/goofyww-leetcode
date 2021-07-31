@@ -1,4 +1,4 @@
-package cn.goofyww.leetcode.addTwoNumbers;
+package cn.goofyww.leetcode.addtwonumbers;
 
 /**
  * 2. 两数相加

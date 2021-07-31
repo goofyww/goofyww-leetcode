@@ -1,4 +1,4 @@
-package cn.goofyww.leetcode.findChildDept;
+package cn.goofyww.leetcode.findchilddept;
 
 import java.util.ArrayList;
 import java.util.List;
