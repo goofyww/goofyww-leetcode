@@ -10,15 +10,23 @@ public class LinkedNode {
 
     public static void main(String[] args) {
 
+        // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 3
+
         Node nd1 = new Node(1);
         Node nd2 = new Node(2);
         Node nd3 = new Node(3);
+        Node nd4 = new Node(4);
+        Node nd5 = new Node(5);
+        Node nd6 = new Node(6);
+
         nd1.setNext(nd2);
         nd2.setNext(nd3);
-//        nd3.setNext(nd1);
+        nd3.setNext(nd4);
+        nd4.setNext(nd5);
+        nd5.setNext(nd6);
+        nd6.setNext(nd3);
 
-//        System.out.println(hasCycle(nd1));
-        System.out.println(hasCycleByQuickSolw(nd1));
+        System.out.println(findFirstCycleNode(nd1).getValue());
     }
 
     /**
@@ -70,8 +78,16 @@ public class LinkedNode {
      * 要求找到 3
      */
     public static Node findFirstCycleNode(Node head) {
-
-        return null;
+        Set<Node> set = new HashSet<>();
+        while (head != null) {
+            if (set.contains(head)) {
+                return head;
+            } else {
+                set.add(head);
+                head = head.getNext();
+            }
+        }
+        return head;
     }
 
 
