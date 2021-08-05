@@ -63,5 +63,16 @@ public class LinkedNode {
         return false;
     }
 
+    /**
+     * 找到单链表的第一个成环节点
+     * 链表头指针为head, 目标找到红色节点，要求线性时间复杂度
+     * 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 3
+     * 要求找到 3
+     */
+    public static Node findFirstCycleNode(Node head) {
+
+        return null;
+    }
+
 
 }
