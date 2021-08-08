@@ -153,6 +153,27 @@ public class BinaryTreeExample {
     }
 
     /**
+     * 中序遍历，非递归实现 ，带返回值
+     * left -> root - right
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                list.add(cur.value);
+                cur = cur.right;
+            }
+        }
+        return list;
+    }
+
+    /**
      * 后序遍历
      * left -> right -> root
      */
@@ -241,5 +262,36 @@ public class BinaryTreeExample {
             }
         }
     }
+
+    /**
+     * 广度优先遍历，带返回值
+     * 广度优先搜索(Breadth First Search),又叫宽度优先搜索 or 横向优先搜索 or 层序遍历，是从根结点开始沿着树的宽度搜索遍历
+     * 可以利用队列实现广度优先搜索
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode node = root;
+        if (node != null) {
+            queue.offer(node);
+        }
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            lists.add(list);
+            for (int i = 0; i < size; i++) {
+                node = queue.poll();
+                list.add(node.value);
+                if (null != node.left) {
+                    queue.offer(node.left);
+                }
+                if (null != node.right) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return lists;
+    }
+
 
 }
