@@ -73,6 +73,7 @@ public class BinaryTreeExample {
 
     /**
      * 前序遍历，递归实现
+     * 深度优先遍历
      * root -> left -> right
      */
     public static void preorderTraversal(TreeNode root) {
@@ -84,6 +85,8 @@ public class BinaryTreeExample {
 
     /**
      * 前序遍历，非递归实现
+     * 深度优先遍历，深度优先搜索(Depth First Search)是沿着树的深度遍历树的节点，尽可能深的搜索树的分支
+     * 深度优先搜索二叉树是先访问根结点，然后遍历左子树接着是遍历右子树，因此我们可以利用堆栈的先进后出的特点
      * root -> left -> right
      */
     public static void preorderTraversal2(TreeNode root) {
@@ -101,6 +104,8 @@ public class BinaryTreeExample {
 
     /**
      * 前序遍历，非递归实现2
+     * 深度优先遍历，深度优先搜索(Depth First Search)是沿着树的深度遍历树的节点，尽可能深的搜索树的分支
+     * 深度优先搜索二叉树是先访问根结点，然后遍历左子树接着是遍历右子树，因此我们可以利用堆栈的先进后出的特点
      * root -> left -> right
      */
     public static void preorderTraversal3(TreeNode root) {
@@ -213,9 +218,11 @@ public class BinaryTreeExample {
     }
 
     /**
-     * 层序遍历
+     * 广度优先遍历
+     * 广度优先搜索(Breadth First Search),又叫宽度优先搜索 or 横向优先搜索 or 层序遍历，是从根结点开始沿着树的宽度搜索遍历
+     * 可以利用队列实现广度优先搜索
      */
-    public static void levelTraversal(TreeNode root) {
+    public static void levelOrderTraversal(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         if (root != null) {                             // 如果根节点不为空,将第一层根节点入队列
             queue.offer(root);
@@ -233,20 +240,6 @@ public class BinaryTreeExample {
                 }
             }
         }
-    }
-
-    /**
-     * 广度优先遍历
-     */
-    public static void breadthFirstSearch(TreeNode root) {
-
-    }
-
-    /**
-     * 深度优先遍历
-     */
-    public static void depthFirstTraversal(TreeNode root) {
-
     }
 
 }
