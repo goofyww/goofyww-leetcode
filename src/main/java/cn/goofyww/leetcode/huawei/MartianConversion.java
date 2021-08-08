@@ -3,13 +3,19 @@ package cn.goofyww.leetcode.huawei;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.*;
 
-public class Main {
+/**
+ * 火星计算转换
+ * x$y = 3 * x + y + 2
+ * x#y = 2 * x + 3 * y + 4
+ * 根据输入的火星算法，进行计算
+ * example:
+ * 7#6$5#12 = 226
+ */
+public class MartianConversion {
 
     public static void main(String[] args) throws InvalidAlgorithmParameterException {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
-
-//        String str = "7#6$5#12";
         char[] chars = str.toCharArray();
         // 先计算 $
         int size = chars.length;
@@ -45,7 +51,7 @@ public class Main {
                         break;
                     } else {
                         if (size - 1 == y) {
-                            k = Integer.parseInt(str.substring(i + 1, y));
+                            k = Integer.parseInt(str.substring(i + 1, y + 1));
                         }
                     }
                 }
