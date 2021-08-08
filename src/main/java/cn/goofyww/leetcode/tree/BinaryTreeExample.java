@@ -1,7 +1,6 @@
 package cn.goofyww.leetcode.tree;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class BinaryTreeExample {
 
@@ -21,8 +20,6 @@ public class BinaryTreeExample {
 
         TreeNode nd9 = new TreeNode(1);
 
-        Set<Object> set = new HashSet<>();
-
         nd1.left = nd2;
         nd1.right = nd3;
 
@@ -35,8 +32,30 @@ public class BinaryTreeExample {
         nd3.right = nd8;
 
         nd8.right = nd9;
+         /*
+                            5
+                          /   \
+                         8     4
+                       /  \   /  \
+                     11     13    4
+                   /   \         /  \
+                  7    2             1
+          */
+//        System.out.println(hasSum(nd1, 22));
 
-        System.out.println(hasSum(nd1, 22));
+//        preorderTraversal(nd1);               // 前序 递归实现
+//        preorderTraversal2(nd1);              // 前序 非递归实现1
+//        preorderTraversal3(nd1);              // 前序 非递归实现2
+
+//        mediumOrderTraversal(nd1);            // 中序 递归实现
+//        mediumOrderTraversal2(nd1);           // 中序 非递归实现1
+
+//        postorderTraversal(nd1);              // 后序
+        postorderTraversal2(nd1);             // 后序 非递归实现1
+//        postorderTraversal3(nd1);             // 后序 非递归实现2
+
+//        levelTraversal(nd1);                  // 层序
+
     }
 
     /**
@@ -50,6 +69,184 @@ public class BinaryTreeExample {
         if (root == null) return false;
         if (root.value == sum && root.left == null && root.right == null) return true;
         return hasSum(root.left, sum - root.value) || hasSum(root.right, sum - root.value);
+    }
+
+    /**
+     * 前序遍历，递归实现
+     * root -> left -> right
+     */
+    public static void preorderTraversal(TreeNode root) {
+        if (root == null) return;
+        System.out.printf("%d\t", root.value);
+        preorderTraversal(root.left);
+        preorderTraversal(root.right);
+    }
+
+    /**
+     * 前序遍历，非递归实现
+     * root -> left -> right
+     */
+    public static void preorderTraversal2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();                  // 用一个栈来存放树中的节点
+        while (root != null || !stack.isEmpty()) {              // 只要当前节点不为空(即当前节点的左右子树没有访问完毕)或者栈中还有节点(还有节点没有访问)
+            while (root != null) {                              // 一直往左走
+                stack.push(root);                               // 根节点入栈
+                System.out.printf("%d\t", root.value);          // 打印根节点
+                root = root.left;                               // 访问左子树
+            }
+            root = stack.pop();                                 // 取出根节点
+            root = root.right;                                  // 访问右子树
+        }
+    }
+
+    /**
+     * 前序遍历，非递归实现2
+     * root -> left -> right
+     */
+    public static void preorderTraversal3(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        if (root == null) return;                              // 树为空
+        stack.push(root);                                      // 将根节点压入栈中
+        while (!stack.isEmpty()) {                             // 只要栈不为空，执行循环
+            root = stack.pop();                                // 取出栈顶元素打印，此时的栈顶元素是以node为根的子树的根
+            System.out.printf("%d\t", root.value);
+            if (root.right != null) {                          // 将右子树压入栈中
+                stack.push(root.right);
+            }
+            if (root.left != null) {                           // 将左子树压入栈中
+                stack.push(root.left);
+            }
+        }
+    }
+
+    /**
+     * 中序遍历，递归实现
+     * left -> root - right
+     */
+    public static void mediumOrderTraversal(TreeNode root) {
+        if (root == null) return;
+        mediumOrderTraversal(root.left);
+        System.out.printf("%d\t", root.value);
+        mediumOrderTraversal(root.right);
+    }
+
+    /**
+     * 中序遍历，非递归实现
+     * left -> root - right
+     */
+    public static void mediumOrderTraversal2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {              // 只要当前节点不为空(即当前节点的左右子树没有访问完毕)或者栈中还有节点(还有节点没有访问)
+            while (root != null) {
+                stack.push(root);                               // 根节点入栈
+                root = root.left;                               // 访问左子树
+            }
+            root = stack.pop();                                 // 取出左子树的根节点
+            System.out.printf("%d\t", root.value);              // 打印
+            root = root.right;                                  // 访问右子树
+        }
+    }
+
+    /**
+     * 后序遍历
+     * left -> right -> root
+     */
+    public static void postorderTraversal(TreeNode root) {
+        if (root == null) return;
+        postorderTraversal(root.left);
+        postorderTraversal(root.right);
+        System.out.printf("%d\t", root.value);
+    }
+
+    /**
+     * 后序遍历，非递归实现1
+     * left -> right -> root
+     */
+    public static void postorderTraversal2(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = root;
+        TreeNode pre = null;
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;                                   // 访问左子树
+            }
+            node = stack.peek();                                    // 判断栈顶元素(根)
+
+            // 1. 如果此时的根的右子树为空 node.right == null
+            // 2. 如果此时的根的右子树已经访问过了
+            //    node.right == prev (prev记录的是上次访问打印的节点)
+            if (node.right == null || node.right == pre) {
+                stack.pop();                                        // 打印根节点，并出栈，将打印过的节点从栈中删除
+                System.out.printf("%d\t", node.value);
+                pre = node;                                         // 记录prev，表示以当前 prev 为根的子树已经访问过了
+                node = null;                                        // node置null就不会再次访问以node为根节点的左右子树，这里的node既然已经打印，说明它的左右子树早已访问完毕
+            } else {
+                node = node.right;                                  // 访问右子树
+            }
+        }
+    }
+
+    /**
+     * 后序遍历，非递归实现2
+     * left -> right -> root
+     */
+    public static void postorderTraversal3(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> list = new LinkedList<>();
+        if (root == null) return;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            list.add(0, node.value);                // 头插此时根节点
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+
+        for (Integer v : list) {
+            System.out.printf("%d\t", v);
+        }
+    }
+
+    /**
+     * 层序遍历
+     */
+    public static void levelTraversal(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root != null) {                             // 如果根节点不为空,将第一层根节点入队列
+            queue.offer(root);
+        }
+        while (!queue.isEmpty()) {                      // 只要队列不为空，执行循环
+            int num = queue.size();                     // 记录此时队列的长度，此时的num代表了某一层一共有多少个节点，防止被后边入队的节点个数影响输出这一层的节点
+            for (int i = 0; i < num; i++) {             // 对某一层的所有节点进行操作(从左到右)
+                TreeNode node = queue.poll();           // 取出这一层第一个节点
+                System.out.printf("%d\t", node.value);  // 打印节点
+                if (node.left != null) {                // 将此节点的左子树根节点入队列
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {               // 将此节点的右子树根节点入队列
+                    queue.offer(node.right);
+                }
+            }
+        }
+    }
+
+    /**
+     * 广度优先遍历
+     */
+    public static void breadthFirstSearch(TreeNode root) {
+
+    }
+
+    /**
+     * 深度优先遍历
+     */
+    public static void depthFirstTraversal(TreeNode root) {
+
     }
 
 }
