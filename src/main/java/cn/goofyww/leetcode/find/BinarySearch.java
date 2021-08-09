@@ -11,14 +11,19 @@ package cn.goofyww.leetcode.find;
 public class BinarySearch {
 
     public static void main(String[] args) {
-        int[] arr = {7, 8, 9, 10, 11, 12, 1, 2, 3};
-        System.out.println(binarySearch(arr, 2));
+        int[] arr1 = {7, 8, 9, 10, 11, 12, 1, 2, 3};
+        System.out.println(binarySearch(arr1, 2));
+
+        int[] arr2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int x = 1;
+        System.out.println(binarySearch(arr2, x));
     }
 
     /**
+     * 旋转有序数组
      * 二分查找O(logn)
      */
-    public static int binarySearch(int[] arr, int target) {
+    public static int reBinarySearch(int[] arr, int target) {
         int i = -1, l = arr.length;
         if (l < 1) return i;
         if (l == 1) return arr[0] == target ? 0 : -1;
@@ -35,6 +40,32 @@ public class BinarySearch {
             }
         }
         return i;
+    }
+
+    /**
+     * 有序数组
+     * 二分查找O(logn)
+     */
+    public static int binarySearch(int[] arr, int x) {
+        int res = -1, l = arr.length;
+        if (l < 1) return res;
+        if (l == 1) return arr[0] == x ? 0 : -1;
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (x == arr[mid]) {
+                return mid;
+            }
+            if (x < arr[mid]) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return res;
     }
 
 }
