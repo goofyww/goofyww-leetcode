@@ -25,19 +25,33 @@ public class BinarySearch {
      */
     public static int reBinarySearch(int[] arr, int target) {
         int i = -1, l = arr.length;
-        if (l < 1) return i;
-        if (l == 1) return arr[0] == target ? 0 : -1;
+        if (l < 1) {
+            return i;
+        }
+        if (l == 1) {
+            return arr[0] == target ? 0 : -1;
+        }
         int s = 0, e = l - 1;
         while (s <= e) {
             int m = (s + e) / 2;
-            if (arr[m] == target) return m;
-            if (arr[0] <= arr[m]) {
-                if (arr[0] <= target && target < arr[m]) e = m - 1;
-                else s = m + 1;
-            } else {
-                if (arr[m] < target && target <= arr[l - 1]) s = m + 1;
-                else e = m - 1;
+            if (arr[m] == target) {
+                return m;
             }
+
+            if (arr[0] <= arr[m]) {
+                if (arr[0] <= target && target < arr[m]) {
+                    e = m - 1;
+                } else {
+                    s = m + 1;
+                }
+            } else {
+                if (arr[m] < target && target <= arr[l - 1]) {
+                    s = m + 1;
+                } else {
+                    e = m - 1;
+                }
+            }
+
         }
         return i;
     }

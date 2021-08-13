@@ -26,7 +26,8 @@ public class LinkedNode {
         nd5.setNext(nd6);
         nd6.setNext(nd3);
 
-        System.out.println(findFirstCycleNode(nd1).getValue());
+//        System.out.println(findFirstCycleNode(nd1).getValue());
+        System.out.println(findFirstCycleNode2(nd1).getValue());
     }
 
     /**
@@ -72,7 +73,8 @@ public class LinkedNode {
     }
 
     /**
-     * 找到单链表的第一个成环节点
+     * 方式一：
+     * 找到单链表的第一个成环节点（判断链表的入口）
      * 链表头指针为head, 目标找到红色节点，要求线性时间复杂度
      * 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 3
      * 要求找到 3
@@ -88,6 +90,40 @@ public class LinkedNode {
             }
         }
         return head;
+    }
+
+    /**
+     * 方式二：
+     * 要求 空间复杂度 O(1)
+     * 时间复杂度 O()
+     * 解题思路：
+     * 从头结点出发，慢指针一次移动一个位置，快指针一次移动两个位置。如果有环的话，他们一定会在某个位置相遇。
+     * 但这个位置不一定是入口，只能说在环内某个位置相遇
+     * 然后相遇之后，快指针从头开始每次向后移动一个位置。慢指针从相遇位置向后移动，他们一定会相遇
+     * -----------------------------------------------------------------------------
+     * 找到单链表的第一个成环节点（判断链表的入口）
+     * 链表头指针为head, 目标找到红色节点，要求线性时间复杂度
+     * 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 3
+     * 要求找到 3
+     *
+     * @param head
+     * @return
+     */
+    public static Node findFirstCycleNode2(Node head) {
+        Node fast = head, slow = head;
+        while (fast != null && fast.getNext() != null) {
+            fast = fast.getNext().getNext();
+            slow = slow.getNext();
+            if (fast == slow) {
+                slow = head;
+                while (slow != fast) {
+                    fast = fast.getNext();
+                    slow = slow.getNext();
+                }
+                return slow;
+            }
+        }
+        return null;
     }
 
 
