@@ -59,11 +59,11 @@ public class LinkedListInversion {
      */
     public static Node reverseB(Node node) {
         Node resultList = new Node(-1);
-        // -1 -> * -> * -> *
+        // -1 -> *1 -> *2 -> *3
         resultList.setNext(node);
-        // * -> * -> *
+        // *1 -> *2 -> *3
         Node p = node;
-        // * -> *
+        // *2 -> *3
         Node pNext = p.getNext();
         while (pNext != null) {
             p.setNext(pNext.getNext());
