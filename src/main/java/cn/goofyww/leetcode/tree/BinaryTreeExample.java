@@ -51,10 +51,12 @@ public class BinaryTreeExample {
 //        mediumOrderTraversal2(nd1);           // 中序 非递归实现1
 
 //        postorderTraversal(nd1);              // 后序
-        postorderTraversal2(nd1);             // 后序 非递归实现1
+//        postorderTraversal2(nd1);             // 后序 非递归实现1
 //        postorderTraversal3(nd1);             // 后序 非递归实现2
 
 //        levelTraversal(nd1);                  // 层序
+
+        invertTree2(nd1);
 
     }
 
@@ -290,6 +292,66 @@ public class BinaryTreeExample {
                 }
             }
         }
+        return lists;
+    }
+
+    /**
+     * 二叉树反转
+     * 方式一：递归
+     */
+    public static TreeNode invertTree(TreeNode root) {
+        if(Objects.isNull(root)) {
+            return root;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
+    /**
+     * 二叉树反转
+     * 方式二：层序遍历，基于栈
+     *
+     */
+    public static TreeNode invertTree2(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                swap(node);
+                if(node.left!=null){
+                    queue.offer(node.left);
+                }
+                if(node.right!=null){
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return root;
+    }
+
+    public static void swap(TreeNode root){
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+    }
+
+    /**
+     * 之字遍历
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> order(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
         return lists;
     }
 

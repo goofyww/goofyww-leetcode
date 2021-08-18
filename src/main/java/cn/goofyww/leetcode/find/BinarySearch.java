@@ -51,7 +51,6 @@ public class BinarySearch {
                     e = m - 1;
                 }
             }
-
         }
         return i;
     }
