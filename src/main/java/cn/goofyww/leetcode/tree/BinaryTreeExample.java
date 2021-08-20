@@ -300,7 +300,7 @@ public class BinaryTreeExample {
      * 方式一：递归
      */
     public static TreeNode invertTree(TreeNode root) {
-        if(Objects.isNull(root)) {
+        if (Objects.isNull(root)) {
             return root;
         }
         TreeNode temp = root.left;
@@ -314,7 +314,6 @@ public class BinaryTreeExample {
     /**
      * 二叉树反转
      * 方式二：层序遍历，基于栈
-     *
      */
     public static TreeNode invertTree2(TreeNode root) {
         if (root == null) {
@@ -327,10 +326,10 @@ public class BinaryTreeExample {
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
                 swap(node);
-                if(node.left!=null){
+                if (node.left != null) {
                     queue.offer(node.left);
                 }
-                if(node.right!=null){
+                if (node.right != null) {
                     queue.offer(node.right);
                 }
             }
@@ -338,7 +337,7 @@ public class BinaryTreeExample {
         return root;
     }
 
-    public static void swap(TreeNode root){
+    public static void swap(TreeNode root) {
         TreeNode tmp = root.left;
         root.left = root.right;
         root.right = tmp;
@@ -350,9 +349,48 @@ public class BinaryTreeExample {
      * @param root
      * @return
      */
-    public List<List<Integer>> order(TreeNode root) {
-        List<List<Integer>> lists = new ArrayList<>();
-        return lists;
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        TreeNode rt = root;
+        if (rt == null) return res;
+
+        Queue<TreeNode> que = new LinkedList<TreeNode>();
+        que.offer(rt);
+        while (!que.isEmpty()) {
+            List<Integer> inList = new ArrayList<>();
+
+        }
+        return res;
+    }
+
+    /**
+     * @param root TreeNode类
+     * @return int整型ArrayList<ArrayList <>>
+     */
+    public ArrayList<ArrayList<Integer>> zizagLevelOrder(TreeNode root) {
+        // write code here
+        ArrayList<ArrayList<Integer>> list1 = new ArrayList<ArrayList<Integer>>();
+        if (root == null) return list1;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            ArrayList<Integer> list2 = new ArrayList<Integer>();//存储每一层节点
+            for (int i = queue.size(); i > 0; i--) {//遍历当前层的节点 注意不能反着写
+                TreeNode temp = queue.poll();
+                if ((list1.size() + 1) % 2 != 0) //list1.size()+1：当前的层数，从1开始
+                    list2.add(temp.value);//奇数层，头插
+                else
+                    list2.add(0, temp.value);//偶数层，尾插
+                if (temp.left != null)
+                    queue.add(temp.left);
+                if (temp.right != null)
+                    queue.add(temp.right);
+            }
+            list1.add(list2);
+
+        }
+        return list1;
+
     }
 
 

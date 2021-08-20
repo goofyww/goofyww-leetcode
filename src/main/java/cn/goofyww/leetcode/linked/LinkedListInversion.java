@@ -66,12 +66,56 @@ public class LinkedListInversion {
         // *2 -> *3
         Node pNext = p.getNext();
         while (pNext != null) {
+            // *1 -> *3
             p.setNext(pNext.getNext());
+            // *2 -> *1
             pNext.setNext(resultList.getNext());
+            // -1 -> *2
             resultList.setNext(pNext);
+
             pNext = p.getNext();
         }
         return resultList.getNext();
+    }
+
+    /**
+     * 头插法
+     */
+    public static Node reversA(Node root) {
+        if (root == null) {
+            return root;
+        }
+        Node r = new Node(-1);
+        Node p = root;
+        while (p != null) {
+            Node temp = p.next;
+
+            p.next = r.next;
+            r.next = p;
+
+            p = temp;
+        }
+        return r.next;
+    }
+
+    /**
+     * 原地置换
+     */
+    public static Node reversB(Node root) {
+        if (root == null) {
+            return root;
+        }
+        Node r = new Node(-1);
+        r.next = root;
+        Node p = root;
+        Node pNext = p.next;
+        while (pNext != null) {
+            p.next = pNext.next;
+            pNext.next = r.next;
+            r.next = pNext;
+            pNext  = p.next;
+        }
+        return r.next;
     }
 
 }

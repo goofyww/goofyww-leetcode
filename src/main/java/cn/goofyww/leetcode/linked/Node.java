@@ -2,8 +2,8 @@ package cn.goofyww.leetcode.linked;
 
 public class Node {
 
-    private int value;
-    private Node next;
+    int value;
+    Node next;
 
     public Node() {
     }
