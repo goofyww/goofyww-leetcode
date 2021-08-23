@@ -61,13 +61,11 @@ public class ArrTopK {
                 return arr1[k - length2 - 1];
             }
             if (arr1[index1] >= arr2[index2]) {
-                res = arr2[index2];
-                index2++;
+                res = arr2[index2++];
                 continue;
             }
             if (arr1[index1] <= arr2[index2]) {
-                res = arr1[index1];
-                index1++;
+                res = arr1[index1++];
             }
         }
         return res;

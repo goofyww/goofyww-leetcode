@@ -6,38 +6,39 @@ import java.util.Objects;
 
 /**
  * 查找子部门
- *
+ * <p>
  * 问题描述：给出一组部门列表，部门之间通过 pid 作为 上下级的依赖关系，比如，pid 为 1的集合元素，全部都是归属于 id 为1 的子部分，
  * 现在写一个方法，指定一个部门id，返回该部门（包含自身）所有的子部门以及以下所有部门的列表，
  * eg1: 输入 2 ，main方法中的list集合，
- *      输出 包含如下的集合列表
- *          2 - 1
- *          5 - 2
- *          6 - 2
- *          7 - 2
- *          14 - 5
- *          15 - 5
- *          16 - 5
- *
+ * 输出 包含如下的集合列表
+ * 2 - 1
+ * 5 - 2
+ * 6 - 2
+ * 7 - 2
+ * 14 - 5
+ * 15 - 5
+ * 16 - 5
+ * <p>
  * eg2: 输入 3 ，main方法中的list集合，
- *      输出 包含如下的集合列表
- *          3 - 1
- *          8 - 3
- *          9 - 3
- *          10 - 3
- *          17 - 9
- *          18 - 9
- *          19 - 9
- *          20 - 18
- *          21 - 18
- *          22 - 18
+ * 输出 包含如下的集合列表
+ * 3 - 1
+ * 8 - 3
+ * 9 - 3
+ * 10 - 3
+ * 17 - 9
+ * 18 - 9
+ * 19 - 9
+ * 20 - 18
+ * 21 - 18
+ * 22 - 18
  */
 public class FindChildDept {
 
     public static void main(String[] args) {
 
         List<Dept> deptList = new ArrayList<>();
-        deptList.add(new Dept(1, 0));
+
+//        deptList.add(new Dept(1, 0));
 
         deptList.add(new Dept(2, 1));
         deptList.add(new Dept(3, 1));
@@ -72,15 +73,8 @@ public class FindChildDept {
     }
 
     public static List<Dept> getDeptListByVal(int id, List<Dept> deptAll) {
-
-        if (deptAll.isEmpty()){
-            return deptAll;
-        }
-
-        if (id == 0){
-            return deptAll;
-        }
-
+        if (deptAll.isEmpty()) return deptAll;
+        if (id == 0) return deptAll;
         // 判断要查询的部门是否是一级部门，如果是一级部门（pid==0，表示没有父部门），直接返回完整列表
         for (Dept dept : deptAll) {
             if (dept.getPid() == 0) {
