@@ -111,8 +111,10 @@ public class BinaryTreeExample {
      * root -> left -> right
      */
     public static void preorderTraversal3(TreeNode root) {
+        if (root == null){                                     // 树为空
+            return;
+        }
         Stack<TreeNode> stack = new Stack<>();
-        if (root == null) return;                              // 树为空
         stack.push(root);                                      // 将根节点压入栈中
         while (!stack.isEmpty()) {                             // 只要栈不为空，执行循环
             root = stack.pop();                                // 取出栈顶元素打印，此时的栈顶元素是以node为根的子树的根
@@ -300,9 +302,7 @@ public class BinaryTreeExample {
      * 方式一：递归
      */
     public static TreeNode invertTree(TreeNode root) {
-        if (Objects.isNull(root)) {
-            return root;
-        }
+        if (Objects.isNull(root)) return null;
         TreeNode temp = root.left;
         root.left = root.right;
         root.right = temp;
@@ -316,9 +316,7 @@ public class BinaryTreeExample {
      * 方式二：层序遍历，基于栈
      */
     public static TreeNode invertTree2(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
+        if (null == root) return null;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
@@ -344,31 +342,10 @@ public class BinaryTreeExample {
     }
 
     /**
-     * 之字遍历
-     *
-     * @param root
-     * @return
-     */
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
-        TreeNode rt = root;
-        if (rt == null) return res;
-
-        Queue<TreeNode> que = new LinkedList<TreeNode>();
-        que.offer(rt);
-        while (!que.isEmpty()) {
-            List<Integer> inList = new ArrayList<>();
-
-        }
-        return res;
-    }
-
-    /**
      * @param root TreeNode类
      * @return int整型ArrayList<ArrayList <>>
      */
     public ArrayList<ArrayList<Integer>> zizagLevelOrder(TreeNode root) {
-        // write code here
         ArrayList<ArrayList<Integer>> list1 = new ArrayList<ArrayList<Integer>>();
         if (root == null) return list1;
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
@@ -387,11 +364,53 @@ public class BinaryTreeExample {
                     queue.add(temp.right);
             }
             list1.add(list2);
-
         }
         return list1;
-
     }
+
+    /**
+     * 根据层序遍历，取最深链路的val之和
+     *
+     * 如：
+     * 输入
+     *                    1 
+     *                 /     \ 
+     *               2        3 
+     *              / \      /  \ 
+     *             4   5    6    9 
+     *             \    \  /  \
+     *             7    8 10  11
+     *            /      \
+     *                   12
+     * 输出：28
+     */
+    public static int getMaxLenByLevelOrder(TreeNode root) {
+        int resSum = 0;
+        if (Objects.isNull(root)) return resSum;
+        List<Integer> sumInt = new ArrayList<>();
+        sumInt.add(root.value);
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(root);
+        while (!que.isEmpty()) {
+            int size = que.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode n = que.poll();
+                if (n.left != null) {
+                    n.left.value = n.left.value + n.value;
+                    que.offer(n.left);
+                    sumInt.add(n.left.value);
+                }
+                if (n.right != null) {
+                    n.right.value = n.right.value + n.value;
+                    que.offer(n.right);
+                    sumInt.add(n.right.value);
+                }
+            }
+        }
+        return sumInt.get(sumInt.size() - 1);
+    }
+
+
 
 
 }
